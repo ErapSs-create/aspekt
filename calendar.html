@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Календарь сроков — Аспект</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <style>
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+    }
+    .cal-cell {
+      background: #FAFCFC;
+      border: 1px solid var(--pastel);
+      border-radius: 6px;
+      min-height: 84px;
+      padding: 6px 8px;
+      font-size: 12px;
+      position: relative;
+    }
+    .cal-cell.cal-today { border-color: var(--primary-light); background: var(--pastel); }
+    .cal-cell.cal-past { opacity: 0.55; }
+    .cal-day-num {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--primary-darker);
+      margin-bottom: 4px;
+    }
+    .cal-event {
+      display: block;
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .cal-event--red { background: #FFEBEE; color: #C62828; border-left: 3px solid #C62828; }
+    .cal-event--yellow { background: #FFF4E5; color: #ED6C02; border-left: 3px solid #ED6C02; }
+    .cal-event--green { background: #E8F5E9; color: #2E7D32; border-left: 3px solid #2E7D32; }
+    .cal-event:hover { filter: brightness(0.95); text-decoration: none; }
+    .cal-head {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--neutral);
+      text-align: center;
+      padding: 6px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <a class="brand" href="index.html">
+      <div class="brand__logo">А</div>
+      <div>
+        <div class="brand__name">АСПЕКТ</div>
+        <div class="brand__tag">Демо-аккаунт</div>
+      </div>
+    </a>
+    <div class="sidebar-section">Главное</div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html"><span class="sidebar-nav__icon">▣</span> Дашборд</a>
+      <a href="employees.html"><span class="sidebar-nav__icon">👥</span> Сотрудники</a>
+      <a href="calendar.html" class="active"><span class="sidebar-nav__icon">📅</span> Календарь</a>
+      <a href="tools.html"><span class="sidebar-nav__icon">🧮</span> Калькулятор и МВД</a>
+    </nav>
+    <div class="sidebar-section">Аккаунт</div>
+    <nav class="sidebar-nav">
+      <a href="pricing.html"><span class="sidebar-nav__icon">💳</span> Тариф и оплата</a>
+      <a href="index.html"><span class="sidebar-nav__icon">⚙</span> Настройки</a>
+      <a href="index.html"><span class="sidebar-nav__icon">↩</span> Выйти</a>
+    </nav>
+    <div class="sidebar-user">
+      <div class="sidebar-user__avatar">АИ</div>
+      <div>
+        <div class="sidebar-user__name">Анна Иванова</div>
+        <div class="sidebar-user__role">HR · Стройинвест</div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="app-main">
+    <div class="app-topbar">
+      <div>
+        <div class="app-breadcrumbs"><a href="dashboard.html">Личный кабинет</a> / Календарь</div>
+        <h1 class="app-title">Календарь сроков и уведомлений</h1>
+      </div>
+      <div class="app-actions">
+        <button class="btn btn-secondary" id="prev-month">← Назад</button>
+        <button class="btn btn-secondary" id="today-btn">Сегодня</button>
+        <button class="btn btn-secondary" id="next-month">Вперёд →</button>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="panel">
+        <div class="panel__head">
+          <h3 class="panel__title" id="cal-title">—</h3>
+          <div class="panel__actions">
+            <span class="badge badge-red">Просрочены</span>
+            <span class="badge badge-yellow">Скоро</span>
+            <span class="badge badge-green">Действуют</span>
+          </div>
+        </div>
+        <div class="cal-grid" id="cal-heads">
+          <div class="cal-head">Пн</div><div class="cal-head">Вт</div><div class="cal-head">Ср</div>
+          <div class="cal-head">Чт</div><div class="cal-head">Пт</div><div class="cal-head">Сб</div>
+          <div class="cal-head">Вс</div>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+      </div>
+
+      <div>
+        <div class="panel">
+          <h3 class="panel__title">Ближайшие 30 дней</h3>
+          <div id="upcoming"></div>
+        </div>
+
+        <div class="panel">
+          <h3 class="panel__title" style="margin-bottom:8px;">Каналы уведомлений</h3>
+          <div style="font-size:14px;display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--pastel);">
+              <div>📧 E-mail напоминания</div>
+              <span class="badge badge-green">Включено</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--pastel);">
+              <div>🔔 Push-уведомления</div>
+              <span class="badge badge-green">Включено</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--pastel);">
+              <div>💬 Telegram-бот</div>
+              <span class="badge badge-neutral">Не подключён</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;">
+              <div>📱 SMS</div>
+              <span class="badge badge-neutral">Не подключён</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3 class="panel__title" style="margin-bottom:8px;">Пороги напоминаний</h3>
+          <ul style="font-size:14px;padding-left:18px;line-height:1.8;color:var(--primary-darker);">
+            <li>За 30 дней — e-mail</li>
+            <li>За 14 дней — e-mail + push</li>
+            <li>За 7 дней — e-mail + push (повтор ежедневно)</li>
+            <li>За 1 день — все каналы + SMS (Pro)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+(function() {
+  const employees = Aspect.loadEmployees();
+  const today = new Date(Aspect.TODAY.toDateString());
+  let view = new Date(today.getFullYear(), today.getMonth(), 1);
+
+  function renderCal() {
+    const monthNames = [
+      "Январь","Февраль","Март","Апрель","Май","Июнь",
+      "Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"
+    ];
+    document.getElementById("cal-title").textContent = `${monthNames[view.getMonth()]} ${view.getFullYear()}`;
+
+    // Карта событий по дате
+    const eventsByDate = {};
+    employees.forEach(e => {
+      const d = e.expiryDate;
+      if (!eventsByDate[d]) eventsByDate[d] = [];
+      eventsByDate[d].push({ emp: e, type: "expiry" });
+    });
+
+    // Найти первый день (понедельник)
+    const firstOfMonth = new Date(view);
+    let dow = firstOfMonth.getDay();
+    if (dow === 0) dow = 7;
+    const start = new Date(firstOfMonth);
+    start.setDate(start.getDate() - (dow - 1));
+
+    const cells = [];
+    for (let i = 0; i < 42; i++) {
+      const d = new Date(start);
+      d.setDate(d.getDate() + i);
+      const iso = d.toISOString().slice(0, 10);
+      const isToday = d.toDateString() === today.toDateString();
+      const inMonth = d.getMonth() === view.getMonth();
+      const events = eventsByDate[iso] || [];
+      cells.push({ date: d, iso, isToday, inMonth, events });
+    }
+
+    document.getElementById("cal-grid").innerHTML = cells.map(c => {
+      const cls = [
+        "cal-cell",
+        c.isToday ? "cal-today" : "",
+        c.inMonth ? "" : "cal-past",
+      ].join(" ");
+      const evHtml = c.events.slice(0, 3).map(ev => {
+        const s = Aspect.docStatus(ev.emp);
+        const evCls = s.color === "red" ? "cal-event--red"
+                    : s.color === "yellow" ? "cal-event--yellow"
+                    : "cal-event--green";
+        return `<a class="cal-event ${evCls}" href="employee.html?id=${ev.emp.id}" title="${ev.emp.fullName} — ${ev.emp.docType}">${ev.emp.fullName.split(" ")[0]} ${ev.emp.fullName.split(" ")[1] ? ev.emp.fullName.split(" ")[1][0] + "." : ""}</a>`;
+      }).join("");
+      const more = c.events.length > 3 ? `<div class="small muted">+${c.events.length - 3} ещё</div>` : "";
+      return `
+        <div class="${cls}">
+          <div class="cal-day-num">${c.date.getDate()}</div>
+          ${evHtml}${more}
+        </div>
+      `;
+    }).join("");
+  }
+
+  function renderUpcoming() {
+    const upcoming = employees
+      .map(e => ({ e, s: Aspect.docStatus(e) }))
+      .filter(x => x.s.code !== "ok" || x.s.days <= 60)
+      .sort((a, b) => a.s.days - b.s.days)
+      .slice(0, 10);
+
+    const root = document.getElementById("upcoming");
+    if (upcoming.length === 0) {
+      root.innerHTML = '<p class="muted">Нет ближайших дедлайнов</p>';
+      return;
+    }
+    root.innerHTML = upcoming.map(({ e, s }) => `
+      <a href="employee.html?id=${e.id}" style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--pastel);text-decoration:none;color:inherit;">
+        <div style="flex:1;">
+          <div style="font-weight:600;color:var(--primary-darker);">${e.fullName}</div>
+          <div class="small muted">${e.docType} · ${Aspect.fmtDate(e.expiryDate)}</div>
+        </div>
+        <div>${Aspect.statusBadge(e)}</div>
+      </a>
+    `).join("");
+  }
+
+  document.getElementById("prev-month").addEventListener("click", () => {
+    view = new Date(view.getFullYear(), view.getMonth() - 1, 1); renderCal();
+  });
+  document.getElementById("next-month").addEventListener("click", () => {
+    view = new Date(view.getFullYear(), view.getMonth() + 1, 1); renderCal();
+  });
+  document.getElementById("today-btn").addEventListener("click", () => {
+    view = new Date(today.getFullYear(), today.getMonth(), 1); renderCal();
+  });
+
+  renderCal();
+  renderUpcoming();
+})();
+</script>
+
+</body>
+</html>
