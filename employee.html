@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Карточка сотрудника — Аспект</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <a class="brand" href="index.html">
+      <div class="brand__logo">А</div>
+      <div>
+        <div class="brand__name">АСПЕКТ</div>
+        <div class="brand__tag">Демо-аккаунт</div>
+      </div>
+    </a>
+    <div class="sidebar-section">Главное</div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html"><span class="sidebar-nav__icon"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span> Дашборд</a>
+      <a href="employees.html" class="active"><span class="sidebar-nav__icon"><svg class="icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span> Сотрудники</a>
+      <a href="calendar.html"><span class="sidebar-nav__icon"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span> Календарь</a>
+      <a href="tools.html"><span class="sidebar-nav__icon"><svg class="icon" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="12" y1="10" x2="14" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="12" y1="14" x2="14" y2="14"/><line x1="8" y1="18" x2="10" y2="18"/><line x1="12" y1="18" x2="14" y2="18"/></svg></span> Калькулятор и МВД</a>
+    </nav>
+    <div class="sidebar-section">Аккаунт</div>
+    <nav class="sidebar-nav">
+      <a href="pricing.html"><span class="sidebar-nav__icon"><svg class="icon" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></span> Тариф и оплата</a>
+      <a href="index.html"><span class="sidebar-nav__icon"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span> Настройки</a>
+      <a href="index.html"><span class="sidebar-nav__icon"><svg class="icon" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span> Выйти</a>
+    </nav>
+    <div class="sidebar-user">
+      <div class="sidebar-user__avatar">АИ</div>
+      <div>
+        <div class="sidebar-user__name">Анна Иванова</div>
+        <div class="sidebar-user__role">HR · Стройинвест</div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="app-main">
+    <div id="content"></div>
+  </main>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+(function() {
+  const id = parseInt(new URLSearchParams(location.search).get("id"));
+  const employees = Aspect.loadEmployees();
+  const emp = employees.find(e => e.id === id);
+  const root = document.getElementById("content");
+
+  if (!emp) {
+    root.innerHTML = `
+      <div class="app-topbar">
+        <div>
+          <div class="app-breadcrumbs"><a href="employees.html">Сотрудники</a> / Карточка</div>
+          <h1 class="app-title">Сотрудник не найден</h1>
+        </div>
+      </div>
+      <div class="panel">
+        <p>Запрошенный сотрудник не существует или был удалён.</p>
+        <a class="btn btn-primary" href="employees.html">← К списку</a>
+      </div>`;
+    return;
+  }
+
+  const status = Aspect.docStatus(emp);
+  const fineRisk = status.code === "expired" ? 1000000 : 0;
+  const totalDays = Math.round((new Date(emp.expiryDate) - new Date(emp.issueDate)) / (1000*60*60*24)) || 365;
+  const daysLeft = status.days;
+  const daysUsed = Math.max(0, totalDays - daysLeft);
+  const pct = Math.min(100, Math.max(0, (daysUsed / totalDays) * 100));
+  const barCls = status.code === "expired" || status.code === "critical" ? "danger" : (status.code === "soon" ? "warn" : "");
+
+  // История событий — мок
+  const log = [
+    { date: emp.issueDate, type: '<svg class="icon icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>', text: `Документ выдан: ${emp.docType} № ${emp.docNumber}` },
+    { date: emp.medicalCheckDate, type: '<svg class="icon icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v8"/><path d="M3 14h18v6a0 0 0 0 1 0 0H3a0 0 0 0 1 0 0v-6z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="10" y1="10" x2="14" y2="10"/></svg>', text: "Пройден медосмотр" },
+    { date: emp.issueDate, type: '<svg class="icon icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>', text: emp.mvdNotified ? "Подано уведомление в МВД о приёме на работу" : "Уведомление в МВД ещё не подано" },
+    { date: Aspect.TODAY.toISOString().slice(0,10), type: status.code === "expired"
+        ? '<svg class="icon icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
+        : '<svg class="icon icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>',
+      text: status.code === "expired" ? `Документ просрочен ${Math.abs(status.days)} дн. назад — требуется срочное продление` : `Текущий статус: ${status.label} (${status.days} дн. до окончания)` },
+  ].filter(l => l.date);
+
+  root.innerHTML = `
+    <div class="app-topbar">
+      <div>
+        <div class="app-breadcrumbs"><a href="dashboard.html">Личный кабинет</a> / <a href="employees.html">Сотрудники</a> / ${emp.fullName}</div>
+        <h1 class="app-title">${emp.fullName}</h1>
+      </div>
+      <div class="app-actions">
+        <a class="btn btn-secondary" href="tools.html#mvd?id=${emp.id}"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Сформировать уведомление МВД</a>
+        <a class="btn btn-primary" href="employees.html">← К списку</a>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <div class="panel">
+          <div style="display:flex;align-items:center;gap:18px;margin-bottom:18px;">
+            <div class="emp-avatar" style="width:64px;height:64px;font-size:22px;">${Aspect.initials(emp.fullName)}</div>
+            <div>
+              <h3 style="margin:0;">${emp.fullName}</h3>
+              <div class="muted">${emp.position || "—"} · ${emp.department || "—"} · ${emp.citizenship}</div>
+              <div style="margin-top:6px;">${Aspect.statusBadge(emp)}
+                ${emp.mvdNotified ? '<span class="badge badge-green" style="margin-left:8px;">МВД уведомлено</span>' : '<span class="badge badge-red" style="margin-left:8px;">МВД не уведомлено</span>'}
+              </div>
+            </div>
+          </div>
+
+          <h4 style="margin-top:18px;">Документ</h4>
+          <table class="table" style="font-size:14px;">
+            <tr><td style="width:40%;color:var(--neutral);">Тип документа</td><td><strong>${emp.docType}</strong></td></tr>
+            <tr><td style="color:var(--neutral);">Номер</td><td>${emp.docNumber || "—"}</td></tr>
+            <tr><td style="color:var(--neutral);">Дата выдачи</td><td>${Aspect.fmtDate(emp.issueDate)}</td></tr>
+            <tr><td style="color:var(--neutral);">Дата окончания</td><td><strong>${Aspect.fmtDate(emp.expiryDate)}</strong></td></tr>
+            <tr><td style="color:var(--neutral);">Медосмотр</td><td>${Aspect.fmtDate(emp.medicalCheckDate)}</td></tr>
+          </table>
+
+          <h4 style="margin-top:24px;">Срок действия</h4>
+          <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--neutral);margin-bottom:6px;">
+            <span>${Aspect.fmtDate(emp.issueDate)}</span>
+            <span>${Aspect.fmtDate(emp.expiryDate)}</span>
+          </div>
+          <div class="progress"><div class="progress__bar ${barCls}" style="width:${pct}%;"></div></div>
+          <div style="margin-top:8px;font-size:13px;color:var(--neutral);">
+            ${status.code === "expired"
+              ? `<strong style="color:#C62828;">Просрочен ${Math.abs(status.days)} дн.</strong>`
+              : `Осталось <strong>${status.days}</strong> дн. из <strong>${totalDays}</strong>`}
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3 class="panel__title" style="margin-bottom:14px;">История действий</h3>
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            ${log.map(l => `
+              <div style="display:flex;gap:12px;align-items:flex-start;padding-bottom:14px;border-bottom:1px solid var(--pastel);">
+                <div style="font-size:20px;">${l.type}</div>
+                <div style="flex:1;">
+                  <div>${l.text}</div>
+                  <div class="small muted">${Aspect.fmtDate(l.date)}</div>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      </div>
+
+      <div>
+        ${status.code === "expired" ? `
+          <div class="panel" style="background:#FFEBEE;border-color:#F4C5C5;">
+            <div style="display:flex;align-items:center;gap:8px;color:#C62828;font-weight:700;margin-bottom:8px;"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Документ просрочен</div>
+            <p style="font-size:14px;color:#C62828;margin-bottom:12px;">
+              По ст. 18.15 КоАП РФ возможный штраф работодателю — <strong>до ${Aspect.fmtMoney(1000000)}</strong>.
+              Возможна приостановка деятельности до 90 суток.
+            </p>
+            <a class="btn btn-danger btn-sm" href="tools.html#mvd">Подать уведомление в МВД</a>
+          </div>
+        ` : ""}
+
+        <div class="panel">
+          <h3 class="panel__title" style="margin-bottom:12px;">Юридический риск</h3>
+          <div style="font-size:32px;font-weight:800;color:${fineRisk > 0 ? '#C62828' : '#2E7D32'};line-height:1.1;">
+            ${Aspect.fmtMoney(fineRisk)}
+          </div>
+          <div class="small muted" style="margin-top:6px;">
+            ${fineRisk > 0
+              ? "Потенциальный штраф по этому сотруднику"
+              : "На сегодня по этому сотруднику штрафа нет"}
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3 class="panel__title" style="margin-bottom:8px;">Уведомления</h3>
+          <div style="font-size:13px;border-left:3px solid var(--primary-light);padding-left:10px;margin-bottom:10px;">
+            E-mail напоминание за 30 дней до окончания документа — <strong>включено</strong>
+          </div>
+          <div style="font-size:13px;border-left:3px solid var(--primary-light);padding-left:10px;margin-bottom:10px;">
+            Push-уведомление за 7 дней — <strong>включено</strong>
+          </div>
+          <div style="font-size:13px;border-left:3px solid var(--neutral);padding-left:10px;">
+            Telegram-бот — <strong>не подключён</strong>
+            <a href="pricing.html" style="font-size:13px;">Подключить →</a>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3 class="panel__title" style="margin-bottom:8px;">Сканы документов</h3>
+          <div style="font-size:14px;color:var(--neutral);">
+            🔒 Хранятся в защищённом S3-хранилище Yandex Cloud.
+          </div>
+          <button class="btn btn-light btn-sm" style="margin-top:10px;">Загрузить скан</button>
+        </div>
+      </div>
+    </div>
+  `;
+})();
+</script>
+
+</body>
+</html>

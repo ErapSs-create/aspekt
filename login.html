@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Вход — Аспект</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body style="background:#F2F8F8;">
+
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;max-width:1000px;width:100%;background:#fff;border-radius:14px;box-shadow:var(--shadow-lg);overflow:hidden;">
+
+    <!-- Левая панель — продукт -->
+    <div style="background:linear-gradient(135deg,#0D4F4F 0%,#082E2E 100%);color:#fff;padding:48px 40px;display:flex;flex-direction:column;justify-content:space-between;min-height:520px;">
+      <div>
+        <a class="brand" href="index.html" style="margin-bottom:32px;text-decoration:none;">
+          <div class="brand__logo" style="background:#fff;color:#0D4F4F;">А</div>
+          <div>
+            <div class="brand__name" style="color:#fff;">АСПЕКТ</div>
+            <div class="brand__tag" style="color:rgba(255,255,255,0.7);">Миграционный учёт</div>
+          </div>
+        </a>
+        <h2 style="color:#fff;font-size:26px;line-height:1.25;margin-bottom:14px;">
+          Контроль документов иностранных сотрудников без штрафов
+        </h2>
+        <p style="color:rgba(255,255,255,0.85);font-size:15px;">
+          Войдите в личный кабинет, чтобы увидеть статусы сотрудников,
+          юридический долг компании и сформировать уведомления в МВД.
+        </p>
+      </div>
+      <div style="border-top:1px solid rgba(255,255,255,0.15);padding-top:20px;font-size:13px;color:rgba(255,255,255,0.6);">
+        Хостинг Yandex Cloud · Шифрование данных · ФЗ-152 · 2FA доступна на тарифе Pro
+      </div>
+    </div>
+
+    <!-- Правая панель — форма -->
+    <div style="padding:48px 40px;">
+      <h1 style="font-size:24px;margin-bottom:6px;">Вход в личный кабинет</h1>
+      <p class="muted" style="margin-bottom:24px;">Демо-режим — нажмите «Войти», данные не проверяются.</p>
+
+      <div class="alert alert--info">
+        <svg class="icon icon-lg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        <div>
+          Это <strong>демонстрационная версия</strong>. Авторизация — формальная,
+          вы попадёте в готовый личный кабинет с примерами данных.
+        </div>
+      </div>
+
+      <form onsubmit="event.preventDefault(); window.location.href='dashboard.html';">
+        <div class="form-field" style="margin-bottom:14px;">
+          <label for="email">E-mail</label>
+          <input id="email" type="email" placeholder="hr@your-company.ru" value="hr@stroyinvest.ru" />
+        </div>
+        <div class="form-field" style="margin-bottom:8px;">
+          <label for="password">Пароль</label>
+          <input id="password" type="password" placeholder="••••••••" value="demo-password" />
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+          <label style="display:flex;align-items:center;gap:6px;font-size:13px;">
+            <input type="checkbox" checked /> Запомнить меня
+          </label>
+          <a href="#" style="font-size:13px;">Забыли пароль?</a>
+        </div>
+        <button class="btn btn-primary btn-lg" type="submit" style="width:100%;">
+          Войти в кабинет
+        </button>
+      </form>
+
+      <div style="margin:24px 0;text-align:center;color:var(--neutral);font-size:13px;position:relative;">
+        <div style="border-top:1px solid var(--pastel);position:absolute;top:50%;left:0;right:0;"></div>
+        <span style="background:#fff;padding:0 12px;position:relative;">или</span>
+      </div>
+
+      <a class="btn btn-secondary" href="dashboard.html" style="width:100%;">
+        Войти через демо-аккаунт →
+      </a>
+
+      <p class="small muted" style="text-align:center;margin-top:24px;">
+        Нет аккаунта? <a href="index.html#contact">Оставьте заявку</a> — мы откроем доступ за 1 день.
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  @media (max-width: 760px) {
+    body > div > div { grid-template-columns: 1fr !important; }
+    body > div > div > div:first-child { min-height: auto !important; padding: 32px 24px !important; }
+    body > div > div > div:last-child { padding: 32px 24px !important; }
+  }
+</style>
+
+</body>
+</html>

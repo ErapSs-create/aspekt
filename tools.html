@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Калькулятор и МВД — Аспект</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <style>
+    .tab-bar {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--pastel);
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--neutral);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tab-btn .icon { width: 16px; height: 16px; }
+    .tab-btn.active {
+      color: var(--primary-dark);
+      border-bottom-color: var(--primary-dark);
+    }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+    .doc-preview {
+      background: #fff;
+      border: 1px solid var(--pastel);
+      border-radius: 8px;
+      padding: 32px 36px;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #000;
+    }
+    .doc-preview h2 {
+      text-align: center;
+      font-family: "Times New Roman", serif;
+      color: #000;
+      font-size: 16px;
+      letter-spacing: 0.05em;
+    }
+    .doc-preview .row {
+      display: flex;
+      justify-content: space-between;
+      margin: 4px 0;
+      gap: 16px;
+    }
+    .doc-preview .label {
+      width: 220px;
+      flex-shrink: 0;
+      color: #555;
+    }
+    .doc-preview .underline {
+      flex: 1;
+      border-bottom: 1px solid #888;
+      padding: 0 4px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <a class="brand" href="index.html">
+      <div class="brand__logo">А</div>
+      <div>
+        <div class="brand__name">АСПЕКТ</div>
+        <div class="brand__tag">Демо-аккаунт</div>
+      </div>
+    </a>
+    <div class="sidebar-section">Главное</div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html"><span class="sidebar-nav__icon"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span> Дашборд</a>
+      <a href="employees.html"><span class="sidebar-nav__icon"><svg class="icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span> Сотрудники</a>
+      <a href="calendar.html"><span class="sidebar-nav__icon"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span> Календарь</a>
+      <a href="tools.html" class="active"><span class="sidebar-nav__icon"><svg class="icon" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="12" y1="10" x2="14" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="12" y1="14" x2="14" y2="14"/><line x1="8" y1="18" x2="10" y2="18"/><line x1="12" y1="18" x2="14" y2="18"/></svg></span> Калькулятор и МВД</a>
+    </nav>
+    <div class="sidebar-section">Аккаунт</div>
+    <nav class="sidebar-nav">
+      <a href="pricing.html"><span class="sidebar-nav__icon"><svg class="icon" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></span> Тариф и оплата</a>
+      <a href="index.html"><span class="sidebar-nav__icon"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span> Настройки</a>
+      <a href="index.html"><span class="sidebar-nav__icon"><svg class="icon" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span> Выйти</a>
+    </nav>
+    <div class="sidebar-user">
+      <div class="sidebar-user__avatar">АИ</div>
+      <div>
+        <div class="sidebar-user__name">Анна Иванова</div>
+        <div class="sidebar-user__role">HR · Стройинвест</div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="app-main">
+    <div class="app-topbar">
+      <div>
+        <div class="app-breadcrumbs"><a href="dashboard.html">Личный кабинет</a> / Калькулятор и МВД</div>
+        <h1 class="app-title">Калькулятор штрафов и генератор уведомлений МВД</h1>
+      </div>
+    </div>
+
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="calc"><svg class="icon" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="12" y1="10" x2="14" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="12" y1="14" x2="14" y2="14"/><line x1="8" y1="18" x2="10" y2="18"/><line x1="12" y1="18" x2="14" y2="18"/></svg> Калькулятор штрафа</button>
+      <button class="tab-btn" data-tab="mvd"><svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Уведомление в МВД</button>
+      <button class="tab-btn" data-tab="risk"><svg class="icon" viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Юр. долг компании</button>
+    </div>
+
+    <!-- ===== Калькулятор ===== -->
+    <div class="tab-pane active" id="tab-calc">
+      <div class="two-col">
+        <div class="panel">
+          <h3 class="panel__title">Расчёт потенциального штрафа</h3>
+          <p class="muted small">По ст. 18.15 КоАП РФ — за привлечение иностранного гражданина без действующих документов. Расчёт ориентировочный, для оценки рисков.</p>
+
+          <div class="form-grid" style="margin-top:16px;">
+            <div class="form-field">
+              <label>Регион</label>
+              <select id="c-region">
+                <option value="msk">Москва или Санкт-Петербург</option>
+                <option value="reg">Другой регион</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Тип нарушения</label>
+              <select id="c-violation">
+                <option value="18.15.1">Привлечение без разрешения/патента (ч. 1 ст. 18.15)</option>
+                <option value="18.15.2">Без разрешения работодателя (ч. 2 ст. 18.15)</option>
+                <option value="18.15.3">Не уведомлено МВД (ч. 3 ст. 18.15)</option>
+                <option value="18.15.4">Повторное нарушение (ч. 4)</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Тип нарушителя</label>
+              <select id="c-entity">
+                <option value="legal">Юридическое лицо</option>
+                <option value="ip">ИП</option>
+                <option value="official">Должностное лицо</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Кол-во сотрудников с нарушениями</label>
+              <input id="c-count" type="number" min="0" value="1" />
+            </div>
+            <div class="form-field" style="grid-column:1/-1;">
+              <label>Дополнительно</label>
+              <label style="font-weight:400;font-size:13px;display:flex;align-items:center;gap:6px;margin-top:4px;">
+                <input type="checkbox" id="c-shutdown" /> Учитывать риск приостановки деятельности (до 90 суток)
+              </label>
+            </div>
+          </div>
+
+          <button class="btn btn-primary mt-16" id="c-calc">Рассчитать</button>
+        </div>
+
+        <div>
+          <div class="panel" style="background:linear-gradient(135deg,#0D4F4F,#082E2E);color:#fff;border-color:transparent;">
+            <div style="font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.7);margin-bottom:8px;">
+              Потенциальный штраф
+            </div>
+            <div style="font-size:36px;font-weight:800;color:#fff;line-height:1.1;" id="c-result">0 ₽</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.7);margin-top:6px;" id="c-result-sub">
+              Заполните форму и нажмите «Рассчитать»
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3 class="panel__title" style="margin-bottom:8px;">Справочно: статья 18.15 КоАП РФ</h3>
+            <p class="small" style="margin-bottom:8px;"><strong>Ч. 1.</strong> Привлечение без разрешения / патента — штраф ЮЛ от 250 000 до 800 000 ₽ за каждого; в Москве и СПб — от 400 000 до 1 000 000 ₽.</p>
+            <p class="small" style="margin-bottom:8px;"><strong>Ч. 2.</strong> Без получения разрешения работодателя — штраф ЮЛ от 250 000 до 800 000 ₽; в Москве и СПб — от 400 000 до 1 000 000 ₽.</p>
+            <p class="small" style="margin-bottom:8px;"><strong>Ч. 3.</strong> Не уведомлено МВД — штраф ЮЛ от 400 000 до 800 000 ₽; в Москве и СПб — от 400 000 до 1 000 000 ₽.</p>
+            <p class="small" style="margin:0;"><strong>Ч. 4.</strong> Повторное нарушение — штраф ЮЛ от 500 000 до 1 000 000 ₽; в Москве и СПб — от 500 000 до 1 000 000 ₽ + приостановка деятельности до 90 суток.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Уведомление в МВД ===== -->
+    <div class="tab-pane" id="tab-mvd">
+      <div class="two-col">
+        <div class="panel">
+          <h3 class="panel__title">Параметры уведомления</h3>
+          <p class="muted small">Заполните данные — и шаблон уведомления (по форме Приказа МВД № 536) будет автоматически сгенерирован справа.</p>
+
+          <div class="form-grid" style="margin-top:16px;">
+            <div class="form-field" style="grid-column:1/-1;">
+              <label>Тип уведомления</label>
+              <select id="m-type">
+                <option value="hire">О заключении трудового договора (приём)</option>
+                <option value="fire">О расторжении трудового договора (увольнение)</option>
+                <option value="change">Об изменении сведений</option>
+              </select>
+            </div>
+            <div class="form-field" style="grid-column:1/-1;">
+              <label>Сотрудник из базы</label>
+              <select id="m-employee"><option value="">— выбрать —</option></select>
+            </div>
+            <div class="form-field">
+              <label>Работодатель (название)</label>
+              <input id="m-employer" type="text" value="ООО «Стройинвест»" />
+            </div>
+            <div class="form-field">
+              <label>ИНН работодателя</label>
+              <input id="m-inn" type="text" value="7728123456" />
+            </div>
+            <div class="form-field">
+              <label>ОГРН</label>
+              <input id="m-ogrn" type="text" value="1147746123456" />
+            </div>
+            <div class="form-field">
+              <label>Адрес</label>
+              <input id="m-address" type="text" value="г. Москва, Ленинский пр-т, д. 25" />
+            </div>
+            <div class="form-field">
+              <label>Дата трудового договора</label>
+              <input id="m-contract-date" type="date" />
+            </div>
+            <div class="form-field">
+              <label>Номер договора</label>
+              <input id="m-contract-no" type="text" value="ТД-2026/178" />
+            </div>
+          </div>
+
+          <div style="display:flex;gap:8px;margin-top:18px;">
+            <button class="btn btn-primary" id="m-generate">Сгенерировать уведомление</button>
+            <button class="btn btn-secondary" id="m-print">Печать / Сохранить PDF</button>
+          </div>
+        </div>
+
+        <div class="panel" style="padding:16px;">
+          <div class="panel__head">
+            <h3 class="panel__title">Превью документа</h3>
+            <span class="badge badge-neutral">Форма по Приказу МВД № 536</span>
+          </div>
+          <div id="m-doc" class="doc-preview">
+            <p class="muted" style="text-align:center;font-family:inherit;">Заполните параметры и нажмите «Сгенерировать»</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Юр. долг ===== -->
+    <div class="tab-pane" id="tab-risk">
+      <div class="panel">
+        <h3 class="panel__title">Совокупный юридический долг компании</h3>
+        <p class="muted small">Рассчитан по сотрудникам с просроченными документами на основе максимальных ставок ст. 18.15 КоАП РФ для г. Москвы.</p>
+
+        <div class="kpi-grid mt-16" id="risk-kpi"></div>
+
+        <h4 style="margin-top:24px;">Сотрудники, формирующие риск</h4>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Сотрудник</th>
+              <th>Документ</th>
+              <th>Просрочен</th>
+              <th>Минимум, ₽</th>
+              <th>Максимум, ₽</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="risk-table"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+(function() {
+  // ===== Табы =====
+  const tabs = document.querySelectorAll(".tab-btn");
+  tabs.forEach(t => t.addEventListener("click", () => {
+    tabs.forEach(x => x.classList.remove("active"));
+    document.querySelectorAll(".tab-pane").forEach(x => x.classList.remove("active"));
+    t.classList.add("active");
+    document.getElementById("tab-" + t.dataset.tab).classList.add("active");
+    history.replaceState(null, "", "#" + t.dataset.tab);
+  }));
+  // открыть таб из hash
+  const hash = location.hash.replace("#", "");
+  if (hash === "mvd" || hash === "risk" || hash === "calc") {
+    document.querySelector(`.tab-btn[data-tab="${hash}"]`).click();
+  }
+
+  // ===== Калькулятор =====
+  // Диапазоны штрафов по ст. 18.15 КоАП РФ (ЮЛ).
+  // Москва/СПб: верхняя планка 1 000 000 ₽; другие регионы — стандартные.
+  const FINE_TABLE = {
+    "18.15.1": { msk: [400000,1000000], reg: [250000,800000], ip: [25000,50000], official: [25000,50000] },
+    "18.15.2": { msk: [400000,1000000], reg: [250000,800000], ip: [25000,50000], official: [25000,50000] },
+    "18.15.3": { msk: [400000,1000000], reg: [400000,800000], ip: [35000,50000], official: [35000,50000] },
+    "18.15.4": { msk: [500000,1000000], reg: [500000,1000000], ip: [35000,70000], official: [35000,70000] },
+  };
+
+  function calc() {
+    const v = document.getElementById("c-violation").value;
+    const region = document.getElementById("c-region").value;
+    const entity = document.getElementById("c-entity").value;
+    const count = parseInt(document.getElementById("c-count").value) || 0;
+    const shutdown = document.getElementById("c-shutdown").checked;
+
+    const t = FINE_TABLE[v];
+    let range;
+    if (entity === "legal") range = (region === "msk") ? t.msk : t.reg;
+    else if (entity === "ip") range = t.ip;
+    else range = t.official;
+
+    const min = range[0] * count;
+    const max = range[1] * count;
+
+    let resultText = `${Aspect.fmtMoney(min)} — ${Aspect.fmtMoney(max)}`;
+    let sub = `за ${count} ${pl(count, "сотрудника", "сотрудников", "сотрудников")}, по ${entity === "legal" ? "юр. лицу" : entity === "ip" ? "ИП" : "должностному лицу"} в ${region === "msk" ? "Москве/СПб" : "регионе"}`;
+    if (shutdown) sub += " · возможна приостановка до 90 суток";
+    if (count === 0) { resultText = "0 ₽"; sub = "Укажите количество сотрудников"; }
+
+    document.getElementById("c-result").textContent = resultText;
+    document.getElementById("c-result-sub").textContent = sub;
+  }
+  document.getElementById("c-calc").addEventListener("click", calc);
+  // Автоматический пересчёт при изменении полей
+  ["c-region","c-violation","c-entity","c-count","c-shutdown"].forEach(id => {
+    document.getElementById(id).addEventListener("change", calc);
+  });
+  calc();
+
+  function pl(n, one, few, many) {
+    n = Math.abs(n) % 100;
+    const n1 = n % 10;
+    if (n > 10 && n < 20) return many;
+    if (n1 > 1 && n1 < 5) return few;
+    if (n1 === 1) return one;
+    return many;
+  }
+
+  // ===== Уведомление МВД =====
+  const employees = Aspect.loadEmployees();
+  const sel = document.getElementById("m-employee");
+  employees.forEach(e => {
+    const o = document.createElement("option");
+    o.value = e.id;
+    o.textContent = `${e.fullName} (${e.docType})`;
+    sel.appendChild(o);
+  });
+  document.getElementById("m-contract-date").value = Aspect.TODAY.toISOString().slice(0,10);
+
+  function generateDoc() {
+    const empId = parseInt(sel.value);
+    const emp = employees.find(e => e.id === empId);
+    const type = document.getElementById("m-type").value;
+    const employer = document.getElementById("m-employer").value;
+    const inn = document.getElementById("m-inn").value;
+    const ogrn = document.getElementById("m-ogrn").value;
+    const address = document.getElementById("m-address").value;
+    const cd = document.getElementById("m-contract-date").value;
+    const cn = document.getElementById("m-contract-no").value;
+
+    if (!emp) {
+      document.getElementById("m-doc").innerHTML = '<p class="muted" style="text-align:center;font-family:inherit;">Выберите сотрудника из базы</p>';
+      return;
+    }
+
+    const titleMap = {
+      hire: "УВЕДОМЛЕНИЕ<br/>о заключении трудового договора с иностранным гражданином",
+      fire: "УВЕДОМЛЕНИЕ<br/>о прекращении (расторжении) трудового договора с иностранным гражданином",
+      change: "УВЕДОМЛЕНИЕ<br/>об изменении сведений по иностранному гражданину",
+    };
+    const title = titleMap[type];
+
+    const html = `
+      <div style="text-align:right;margin-bottom:16px;font-size:11px;">
+        Приложение № 7 к приказу МВД России<br/>
+        от 30.07.2020 № 536
+      </div>
+      <h2>${title}</h2>
+      <div style="margin:12px 0 16px 0;">
+        <div class="row"><span class="label">Куда:</span><span class="underline">УВМ ГУ МВД России по г. Москве</span></div>
+        <div class="row"><span class="label">Дата подачи:</span><span class="underline">${Aspect.fmtDate(Aspect.TODAY.toISOString().slice(0,10))}</span></div>
+      </div>
+
+      <h3 style="font-family:inherit;font-size:14px;color:#000;margin-top:16px;">1. Сведения о работодателе</h3>
+      <div class="row"><span class="label">Полное наименование:</span><span class="underline">${employer}</span></div>
+      <div class="row"><span class="label">ИНН:</span><span class="underline">${inn}</span></div>
+      <div class="row"><span class="label">ОГРН:</span><span class="underline">${ogrn}</span></div>
+      <div class="row"><span class="label">Юр. адрес:</span><span class="underline">${address}</span></div>
+
+      <h3 style="font-family:inherit;font-size:14px;color:#000;margin-top:16px;">2. Сведения об иностранном гражданине</h3>
+      <div class="row"><span class="label">Фамилия, имя, отчество:</span><span class="underline">${emp.fullName}</span></div>
+      <div class="row"><span class="label">Гражданство:</span><span class="underline">${emp.citizenship}</span></div>
+      <div class="row"><span class="label">Документ:</span><span class="underline">${emp.docType}, № ${emp.docNumber || "—"}</span></div>
+      <div class="row"><span class="label">Дата выдачи:</span><span class="underline">${Aspect.fmtDate(emp.issueDate)}</span></div>
+      <div class="row"><span class="label">Дата окончания:</span><span class="underline">${Aspect.fmtDate(emp.expiryDate)}</span></div>
+
+      <h3 style="font-family:inherit;font-size:14px;color:#000;margin-top:16px;">3. Сведения о трудовом договоре</h3>
+      <div class="row"><span class="label">Номер договора:</span><span class="underline">${cn}</span></div>
+      <div class="row"><span class="label">Дата заключения:</span><span class="underline">${Aspect.fmtDate(cd)}</span></div>
+      <div class="row"><span class="label">Должность:</span><span class="underline">${emp.position || "—"}</span></div>
+      <div class="row"><span class="label">Подразделение:</span><span class="underline">${emp.department || "—"}</span></div>
+
+      <div style="margin-top:32px;display:flex;justify-content:space-between;">
+        <div style="text-align:center;">
+          ___________________________<br/>
+          <span style="font-size:11px;">подпись руководителя</span>
+        </div>
+        <div style="text-align:center;">
+          ___________________________<br/>
+          <span style="font-size:11px;">М.П.</span>
+        </div>
+      </div>
+
+      <div style="margin-top:24px;font-size:11px;color:#777;border-top:1px dashed #ccc;padding-top:12px;">
+        Документ сформирован в системе «Аспект» ${new Date().toLocaleString("ru-RU")}.
+        Перед подачей в УВМ МВД проверьте корректность заполнения и заверьте печатью организации.
+      </div>
+    `;
+    document.getElementById("m-doc").innerHTML = html;
+  }
+  document.getElementById("m-generate").addEventListener("click", generateDoc);
+  document.getElementById("m-print").addEventListener("click", () => window.print());
+
+  // ===== Юр. долг =====
+  const expired = employees
+    .map(e => ({ e, s: Aspect.docStatus(e) }))
+    .filter(x => x.s.code === "expired");
+
+  const minTotal = expired.length * 400000;
+  const maxTotal = expired.length * 1000000;
+
+  document.getElementById("risk-kpi").innerHTML = `
+    <div class="kpi-card kpi--danger">
+      <div class="kpi-card__label">Просроченных документов</div>
+      <div class="kpi-card__value">${expired.length}</div>
+      <div class="kpi-card__sub">по сотрудникам с риском штрафа</div>
+    </div>
+    <div class="kpi-card kpi--warning">
+      <div class="kpi-card__label">Минимальный риск</div>
+      <div class="kpi-card__value">${Aspect.fmtMoney(minTotal)}</div>
+      <div class="kpi-card__sub">нижняя планка штрафов</div>
+    </div>
+    <div class="kpi-card kpi--danger">
+      <div class="kpi-card__label">Максимальный риск</div>
+      <div class="kpi-card__value">${Aspect.fmtMoney(maxTotal)}</div>
+      <div class="kpi-card__sub">верхняя планка штрафов</div>
+    </div>
+    <div class="kpi-card kpi--accent">
+      <div class="kpi-card__label">Стоимость подписки Pro</div>
+      <div class="kpi-card__value">9 990 ₽</div>
+      <div class="kpi-card__sub">в месяц — окупится за 1 предотвращённый штраф</div>
+    </div>
+  `;
+
+  const tb = document.getElementById("risk-table");
+  if (expired.length === 0) {
+    tb.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:30px;color:#2E7D32;">Просроченных документов нет 👍</td></tr>`;
+  } else {
+    tb.innerHTML = expired.map(({ e, s }) => `
+      <tr>
+        <td>
+          <div class="emp-cell">
+            <div class="emp-avatar">${Aspect.initials(e.fullName)}</div>
+            <div>
+              <div class="emp-cell__name">${e.fullName}</div>
+              <div class="emp-cell__sub">${e.position} · ${e.department}</div>
+            </div>
+          </div>
+        </td>
+        <td>${e.docType}<div class="small muted">${e.docNumber}</div></td>
+        <td><span class="badge badge-red">${Math.abs(s.days)} дн.</span></td>
+        <td>${Aspect.fmtMoney(400000)}</td>
+        <td><strong style="color:#C62828;">${Aspect.fmtMoney(1000000)}</strong></td>
+        <td><a class="btn btn-light btn-sm" href="employee.html?id=${e.id}">Открыть</a></td>
+      </tr>
+    `).join("");
+  }
+})();
+</script>
+
+</body>
+</html>
